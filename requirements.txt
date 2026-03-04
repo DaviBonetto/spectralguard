@@ -1,0 +1,3 @@
+# Root requirements for package + experiments + demo
+-r mamba_spectral/requirements.txt
+pytest==8.3.5

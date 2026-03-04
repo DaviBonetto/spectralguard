@@ -1,0 +1,72 @@
+﻿# ──────────────────────────────────────────────
+# SpectralGuard .gitignore
+# ──────────────────────────────────────────────
+
+# Python / Environments
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.venv/
+venv/
+env/
+.env
+
+# Build / Distribution
+build/
+dist/
+*.egg-info/
+
+# IDEs / OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# ──────────────────────────────────────────────
+# Experiment artifacts (generated, large files)
+# ──────────────────────────────────────────────
+artifacts/
+*.pkl
+*.pt
+*.ckpt
+*.bin
+*.h5
+
+# Raw results (Tracked only in HF dataset)
+*.csv
+
+# ──────────────────────────────────────────────
+# Project Cleanup (JANITOR decisions)
+# ──────────────────────────────────────────────
+paper/
+multi_agent_prompts/
+inspirações_apagar_depois/
+hf_publish_tmp/
+hf_publish_ready/
+archive/
+b2-and-b3-fix/
+QA_REPORT.md
+nlm_help.txt
+skills/
+
+# ──────────────────────────────────────────────
+# Local logs and scratch outputs
+# ──────────────────────────────────────────────
+*.log
+*_out.txt
+*.resolved
+probe_source.txt
+
+# ──────────────────────────────────────────────
+# Paper LaTeX build artifacts (PDF is committed)
+# ──────────────────────────────────────────────
+*.aux
+*.out
+*.synctex.gz
+*.fls
+*.fdb_latexmk
