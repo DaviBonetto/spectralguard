@@ -13,10 +13,6 @@
 
 [**Paper**](paper/paper.pdf) · [**Quickstart**](#quickstart) · [**Experiments**](#experiment-matrix) · [**Public API**](#public-api)
 
-<br>
-<img src="assets/hidden_state_trajectories_3d.png" alt="SpectralGuard Phase-space trajectory" width="70%"/>
-<br><em>Phase-space trajectory of Mamba-130M hidden states. Benign dynamics maintain a stable orbit (blue), while a Hidden State Poisoning Attack (HiSPA) forces contraction (red). SpectralGuard intervenes before complete memory collapse (green), preserving reasoning capacity.</em>
-
 </div>
 
 ---
@@ -59,6 +55,9 @@ SpectralGuard intercepts inference and extracts feature signals ($[\rho_1\dots\r
 <div align="center">
 <img src="assets/diagram.png" alt="SpectralGuard Architecture Diagram" width="80%"/>
 <br><em>System Architecture: Adversarial tokens $x_t$ attempt to manipulate $\Delta_t$. SpectralGuard dynamically estimates $\rho$ and blocks propagation before the internal state $h_t$ is destroyed.</em>
+<br><br>
+<img src="assets/hidden_state_trajectories_3d.png" alt="SpectralGuard Phase-space trajectory" width="70%"/>
+<br><em>Phase-space trajectory of Mamba-130M hidden states. Benign dynamics maintain a stable orbit (blue), while a Hidden State Poisoning Attack (HiSPA) forces contraction (red). SpectralGuard intervenes before complete memory collapse (green), preserving reasoning capacity.</em>
 </div>
 
 ### Why it Works (Mechanistic Interpretability)
@@ -116,6 +115,12 @@ Throughput benchmarking confirms that the required layer-wise eigenvalue power i
 <img src="assets/latency_benchmark.png" alt="Latency Overhead" width="50%"/>
 <br><em>Inference auto-regressive latency benchmark per token output displaying negligible computational footprint for high-risk monitoring.</em>
 </div>
+
+## Conclusion
+
+The spectral radius of the discretized transition operator is both the mechanism enabling long-range reasoning in State Space Models and the attack surface through which adversaries can silently destroy it. Spectral monitoring provides what gradient clipping once provided for stable training: a lightweight, principled safeguard for the internal dynamics that make reasoning possible.
+
+> _"The era of recurrent foundation models demands recurrent vigilance."_
 
 ---
 
