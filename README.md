@@ -19,7 +19,7 @@
 
 State Space Models (SSMs) such as **Mamba** achieve linear-time sequence processing through input-dependent recurrence, but this mechanism introduces a critical safety vulnerability: **Spectral Collapse**. We show that the spectral radius $\rho(\bar{A})$ of the discretized transition operator governs the effective memory horizon. When an adversary drives $\rho$ toward zero through gradient-based Hidden State Poisoning, memory collapses from millions of tokens to mere dozens, silently destroying reasoning capacity without triggering output-level alarms.
 
-**SpectralGuard** is a real-time, deployable safety monitor for recurrent and hybrid foundation models. By tracking spectral stability ($\rho(\bar{A}_t)$) across all model layers, it provides a principled safeguard against these attacks, achieving near-perfect detection (F1=0.961) with sub-15ms per-token latency.
+**SpectralGuard** is a real-time, deployable safety monitor for recurrent and hybrid foundation models. By tracking spectral stability $\rho(\bar{A}_t)$ across all model layers, it provides a principled safeguard against these attacks, achieving near-perfect detection (F1=0.961) with sub-15ms per-token latency.
 
 ## The Vulnerability: Spectral Collapse
 
