@@ -14,7 +14,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from transformers import AutoConfig, AutoModelForCausalLM, AutoTokenizer
 
-from mamba_spectral.utils.datasets import load_safe_prompts
+from utils.datasets import load_safe_prompts
 
 
 METRIC_SCHEMA_COLUMNS = [

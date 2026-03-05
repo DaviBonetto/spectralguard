@@ -14,7 +14,7 @@ from sklearn.model_selection import StratifiedKFold
 from sklearn.preprocessing import StandardScaler
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-from mamba_spectral.utils.datasets import load_safe_prompts
+from utils.datasets import load_safe_prompts
 
 
 METRIC_SCHEMA_COLUMNS = [

@@ -243,9 +243,8 @@ This repository is designed for full reproducibility. Every paper claim maps to 
 **Checklist:**
 
 - [x] `docs/claims-evidence-matrix.md` maps claims to canonical artifacts
-- [x] `spectralguard.monitor()` API contract is stable and tested
 - [x] Multi-seed experiment policy (`42, 123, 456`) is enforced in runners
-- [x] CI workflow runs contract tests on push/PR
+- [x] CI workflow runs testing on push/PR
 - [ ] Hugging Face Space and Dataset links switched from target to live URLs
 
 ---

@@ -23,7 +23,6 @@ jobs:
           pip install -r requirements.txt
           pip install pytest
 
-      - name: Run contract tests
+      - name: Run tests
         run: |
-          python -m pytest tests/test_spectralguard_api.py -q
-          python -m pytest tests/test_transfer_cli.py -q
+          python -m pytest tests/ -q

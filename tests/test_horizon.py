@@ -67,9 +67,9 @@ def experiment_horizon_validation(
         >>> print(f"Correlation: {result.correlation:.3f}")
         >>> print(f"Predicted horizon: {result.predicted_horizon}")
     """
-    from mamba_spectral.spectral.eigenvalue_analyzer import SpectralAnalyzer
-    from mamba_spectral.spectral.horizon_predictor import HorizonPredictor
-    from mamba_spectral.utils.datasets import generate_associative_recall
+    from spectral.eigenvalue_analyzer import SpectralAnalyzer
+    from spectral.horizon_predictor import HorizonPredictor
+    from utils.datasets import generate_associative_recall
     
     if distances is None:
         distances = [5, 10, 20, 50, 100, 200, 500]
@@ -164,7 +164,7 @@ def run_experiment_with_plots(
         Tuple of (result, plots_dict).
     """
     import matplotlib.pyplot as plt
-    from mamba_spectral.visualization.spectral_plots import plot_spectral_radius_trajectory
+    from visualization.spectral_plots import plot_spectral_radius_trajectory
     
     result = experiment_horizon_validation(model, **kwargs)
     

@@ -92,10 +92,10 @@ class HorizonPredictor:
             model: Mamba model (MambaWrapper or raw model).
             device: Computation device.
         """
-        from mamba_spectral.core.mamba_wrapper import MambaWrapper
-        from mamba_spectral.core.state_extractor import StateExtractor
-        from mamba_spectral.spectral.eigenvalue_analyzer import SpectralAnalyzer
-        from mamba_spectral.spectral.gramian import ReachabilityGramian
+        from core.mamba_wrapper import MambaWrapper
+        from core.state_extractor import StateExtractor
+        from spectral.eigenvalue_analyzer import SpectralAnalyzer
+        from spectral.gramian import ReachabilityGramian
         
         if isinstance(model, MambaWrapper):
             self.wrapper = model

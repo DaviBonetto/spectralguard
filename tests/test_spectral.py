@@ -59,7 +59,7 @@ class TestReachabilityGramian:
     
     def test_gramian_shape(self):
         """Test gramian has correct shape."""
-        from mamba_spectral.spectral.gramian import ReachabilityGramian
+        from spectral.gramian import ReachabilityGramian
         
         n = 8
         A_bar = torch.eye(n) * 0.9
@@ -72,7 +72,7 @@ class TestReachabilityGramian:
     
     def test_gramian_symmetric(self):
         """Test gramian is symmetric."""
-        from mamba_spectral.spectral.gramian import ReachabilityGramian
+        from spectral.gramian import ReachabilityGramian
         
         n = 5
         A_bar = torch.eye(n) * 0.9
@@ -86,7 +86,7 @@ class TestReachabilityGramian:
     
     def test_gramian_rank(self):
         """Test gramian rank computation."""
-        from mamba_spectral.spectral.gramian import ReachabilityGramian
+        from spectral.gramian import ReachabilityGramian
         
         n = 4
         A_bar = torch.diag(torch.tensor([0.9, 0.8, 0.7, 0.6]))
@@ -104,7 +104,7 @@ class TestDatasets:
     
     def test_associative_recall_format(self):
         """Test associative recall dataset format."""
-        from mamba_spectral.utils.datasets import generate_associative_recall
+        from utils.datasets import generate_associative_recall
         
         data = generate_associative_recall(n_samples=5, distance=10)
         
@@ -115,7 +115,7 @@ class TestDatasets:
     
     def test_math_problems_format(self):
         """Test math problems dataset format."""
-        from mamba_spectral.utils.datasets import generate_math_problems
+        from utils.datasets import generate_math_problems
         
         data = generate_math_problems(n_samples=5, difficulty="easy")
         
@@ -125,7 +125,7 @@ class TestDatasets:
     
     def test_safe_prompts_count(self):
         """Test safe prompts loading."""
-        from mamba_spectral.utils.datasets import load_safe_prompts
+        from utils.datasets import load_safe_prompts
         
         prompts = load_safe_prompts(n=20)
         
@@ -141,7 +141,7 @@ class TestVisualization:
         import matplotlib
         matplotlib.use('Agg')
         import matplotlib.pyplot as plt
-        from mamba_spectral.visualization.spectral_plots import plot_eigenvalue_spectrum
+        from visualization.spectral_plots import plot_eigenvalue_spectrum
         
         eigenvalues = np.random.randn(50) + 1j * np.random.randn(50) * 0.1
         fig = plot_eigenvalue_spectrum(eigenvalues)
@@ -154,7 +154,7 @@ class TestVisualization:
         import matplotlib
         matplotlib.use('Agg')
         import matplotlib.pyplot as plt
-        from mamba_spectral.visualization.spectral_plots import plot_spectral_radius_trajectory
+        from visualization.spectral_plots import plot_spectral_radius_trajectory
         
         trajectory = [0.9 + 0.01 * i for i in range(20)]
         fig = plot_spectral_radius_trajectory(trajectory)
@@ -168,7 +168,7 @@ class TestValidation:
     
     def test_validation_runs(self):
         """Test that validation test runs without errors."""
-        from mamba_spectral.utils.validation import validation_test
+        from utils.validation import validation_test
         
         # Should not raise
         result = validation_test(verbose=False, run_gpu_tests=False)
@@ -177,7 +177,7 @@ class TestValidation:
     
     def test_check_dependencies(self):
         """Test dependency checking."""
-        from mamba_spectral.utils.validation import check_dependencies
+        from utils.validation import check_dependencies
         
         deps = check_dependencies()
         

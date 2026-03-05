@@ -69,11 +69,11 @@ def validation_test(
             SpectralGuard,
             AdversarialGenerator,
         )
-        from mamba_spectral.visualization import (
+        from visualization import (
             plot_eigenvalue_spectrum,
             plot_spectral_radius_trajectory,
         )
-        from mamba_spectral.utils import (
+        from utils import (
             generate_associative_recall,
             load_safe_prompts,
         )
@@ -115,7 +115,7 @@ def validation_test(
     log("[3/6] Testing gramian computation...")
     tests_run += 1
     try:
-        from mamba_spectral.spectral.gramian import ReachabilityGramian
+        from spectral.gramian import ReachabilityGramian
         
         gramian_calc = ReachabilityGramian(device='cpu')
         
@@ -139,7 +139,7 @@ def validation_test(
     log("[4/6] Testing dataset generation...")
     tests_run += 1
     try:
-        from mamba_spectral.utils.datasets import (
+        from utils.datasets import (
             generate_associative_recall,
             generate_math_problems,
             load_safe_prompts,
@@ -168,7 +168,7 @@ def validation_test(
         matplotlib.use('Agg')  # Non-interactive backend
         import matplotlib.pyplot as plt
         
-        from mamba_spectral.visualization.spectral_plots import (
+        from visualization.spectral_plots import (
             plot_eigenvalue_spectrum,
             plot_spectral_radius_trajectory,
         )

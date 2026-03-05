@@ -107,8 +107,8 @@ class SpectralGuard:
             collapse_threshold: Delta threshold for "sudden drop".
             device: Computation device.
         """
-        from mamba_spectral.core.mamba_wrapper import MambaWrapper
-        from mamba_spectral.spectral.eigenvalue_analyzer import SpectralAnalyzer
+        from core.mamba_wrapper import MambaWrapper
+        from spectral.eigenvalue_analyzer import SpectralAnalyzer
         
         if isinstance(model, MambaWrapper):
             self.wrapper = model

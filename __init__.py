@@ -14,20 +14,20 @@ __version__ = "0.1.0"
 __author__ = "Research Team"
 
 # Core imports
-from mamba_spectral.core.mamba_wrapper import MambaWrapper
-from mamba_spectral.core.state_extractor import StateExtractor
+from core.mamba_wrapper import MambaWrapper
+from core.state_extractor import StateExtractor
 
 # Spectral analysis
-from mamba_spectral.spectral.eigenvalue_analyzer import SpectralAnalyzer
-from mamba_spectral.spectral.gramian import ReachabilityGramian
-from mamba_spectral.spectral.horizon_predictor import HorizonPredictor
+from spectral.eigenvalue_analyzer import SpectralAnalyzer
+from spectral.gramian import ReachabilityGramian
+from spectral.horizon_predictor import HorizonPredictor
 
 # Security
-from mamba_spectral.security.spectral_guard import SpectralGuard
-from mamba_spectral.security.adversarial_gen import AdversarialGenerator
+from security.spectral_guard import SpectralGuard
+from security.adversarial_gen import AdversarialGenerator
 
 # Convenience function for validation
-from mamba_spectral.utils.validation import validation_test
+from utils.validation import validation_test
 
 __all__ = [
     # Core

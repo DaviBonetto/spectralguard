@@ -69,9 +69,9 @@ def experiment_spectral_guard(
         >>> print(f"F1 Score: {result.f1_score:.3f}")
         >>> print(f"Defense Effectiveness: {result.defense_effectiveness:.1%}")
     """
-    from mamba_spectral.security.spectral_guard import SpectralGuard
-    from mamba_spectral.security.adversarial_gen import AdversarialGenerator
-    from mamba_spectral.utils.datasets import load_safe_prompts
+    from security.spectral_guard import SpectralGuard
+    from security.adversarial_gen import AdversarialGenerator
+    from utils.datasets import load_safe_prompts
     
     if attack_types is None:
         attack_types = ["z-hispa", "m-hispa", "injection"]

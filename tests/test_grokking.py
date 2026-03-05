@@ -67,7 +67,7 @@ def experiment_spectral_grokking(
         This is a simplified version. Full implementation would
         include proper training loop integration.
     """
-    from mamba_spectral.spectral.eigenvalue_analyzer import SpectralAnalyzer
+    from spectral.eigenvalue_analyzer import SpectralAnalyzer
     
     analyzer = SpectralAnalyzer(model, device=device)
     

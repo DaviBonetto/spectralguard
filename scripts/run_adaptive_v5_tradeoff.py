@@ -12,7 +12,7 @@ from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import train_test_split
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-from mamba_spectral.scripts.run_adaptive_v4_stealth import (
+from scripts.run_adaptive_v4_stealth import (
     analyze_prompt,
     auc_effective,
     char_delta,
@@ -25,8 +25,8 @@ from mamba_spectral.scripts.run_adaptive_v4_stealth import (
     summarize_across_seeds,
     tie_lm_head,
 )
-from mamba_spectral.security.adversarial_gen import HiSPAv4
-from mamba_spectral.utils.datasets import load_safe_prompts
+from security.adversarial_gen import HiSPAv4
+from utils.datasets import load_safe_prompts
 
 try:
     import joblib

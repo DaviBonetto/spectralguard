@@ -9,7 +9,7 @@ def test_adaptive_v4_stealth_cli_help() -> None:
     cmd = [
         sys.executable,
         "-m",
-        "mamba_spectral.scripts.run_adaptive_v4_stealth",
+        "scripts.run_adaptive_v4_stealth",
         "--help",
     ]
     proc = subprocess.run(cmd, capture_output=True, text=True, check=False, timeout=180)

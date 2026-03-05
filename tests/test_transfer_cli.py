@@ -9,7 +9,7 @@ def test_transfer_script_cli_help() -> None:
     cmd = [
         sys.executable,
         "-m",
-        "mamba_spectral.scripts.run_stealthy_transfer_zamba2",
+        "scripts.run_stealthy_transfer_zamba2",
         "--help",
     ]
     proc = subprocess.run(cmd, capture_output=True, text=True, check=False, timeout=180)

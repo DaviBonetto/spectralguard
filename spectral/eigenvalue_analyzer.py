@@ -108,8 +108,8 @@ class SpectralAnalyzer:
             device: Device for computation ('cuda' or 'cpu').
         """
         # Handle both MambaWrapper and raw model
-        from mamba_spectral.core.mamba_wrapper import MambaWrapper
-        from mamba_spectral.core.state_extractor import StateExtractor
+        from core.mamba_wrapper import MambaWrapper
+        from core.state_extractor import StateExtractor
         
         if isinstance(model, MambaWrapper):
             self.wrapper = model
