@@ -7,6 +7,11 @@ import os
 import sys
 import tempfile
 import shutil
+import io
+
+# Fix Windows console encoding
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
 
 def main():
     parser = argparse.ArgumentParser(description="Push SpectralGuard to HuggingFace Hub")

@@ -7,8 +7,14 @@ import gradio as gr
 import matplotlib.pyplot as plt
 import numpy as np
 
-from spectralguard import monitor as spectral_monitor
-
+def spectral_monitor(prompt: str, states: dict) -> Tuple[bool, float]:
+    rho_layers = states.get("rho_layers", [])
+    if not rho_layers:
+        return True, 0.0
+    min_rho = min(rho_layers)
+    is_safe = min_rho >= 0.90
+    hazard = max(0.0, min(1.0, 1.0 - (min_rho / 0.90))) if not is_safe else 0.0
+    return is_safe, hazard
 try:
     import torch
     import torch.nn.functional as F

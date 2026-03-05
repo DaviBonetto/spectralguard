@@ -25,5 +25,5 @@ jobs:
 
       - name: Run contract tests
         run: |
-          python -m pytest mamba_spectral/tests/test_spectralguard_api.py -q
-          python -m pytest mamba_spectral/tests/test_transfer_cli.py -q
+          python -m pytest tests/test_spectralguard_api.py -q
+          python -m pytest tests/test_transfer_cli.py -q

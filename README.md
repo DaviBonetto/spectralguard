@@ -10,11 +10,15 @@ _Detecting adversarial prompt injections via hidden-state eigenvalue analysis_
 
 [![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-blue?logo=python&logoColor=white)](https://www.python.org)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
-[![Paper](https://img.shields.io/badge/paper-NeurIPS%202025-red?logo=arxiv)](paper/main.pdf)
+[![Paper](https://img.shields.io/badge/paper-NeurIPS%202026-red?logo=arxiv)](paper/paper.pdf)
+[![HuggingFace](https://img.shields.io/badge/🤗-Demo-yellow)](https://huggingface.co/spaces/DaviBonetto/spectralguard-demo)
+[![HuggingFace Dataset](https://img.shields.io/badge/🤗-Dataset-green)](https://huggingface.co/datasets/DaviBonetto/spectralguard-dataset)
 [![Tests](https://img.shields.io/badge/tests-passing-brightgreen)]()
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-[**Paper**](paper/main.pdf) · [**Quickstart**](#quickstart) · [**Experiments**](#experiment-matrix) · [**API Reference**](#public-api) · [**Reproducibility**](#reproducibility)
+[**Paper**](paper/paper.pdf) · [**Quickstart**](#quickstart) · [**Experiments**](#experiment-matrix) · [**API Reference**](#public-api) · [**Reproducibility**](#reproducibility)
+
+<img src="assets/diagram.png" alt="SpectralGuard Diagram" width="80%"/>
 
 </div>
 
@@ -29,7 +33,7 @@ SpectralGuard is a **runtime safety monitor** for recurrent and hybrid foundatio
 ### Theoretical Foundation
 
 1. **The Spectral Horizon Bound:** We prove that effective memory horizon ($H_{\text{eff}}$) is tightly bounded by the spectral radius $\rho(\bar{A})$. When $\rho$ drops below a critical threshold ($\approx 0.90$), reasoning capacity collapses from millions of tokens to mere dozens.
-2. **Adversarial Impossibility Theorem:** We formally establish that **no defense operating solely on model outputs** can reliably detect spectral collapse attacks. Adversaries can optimize token sequences via Hidden State Poisoning (HiSPA) to crush internal dynamics while maintaining superficially plausible output logits.
+2. **Evasion Existence Theorem:** We formally establish that **no defense operating solely on model outputs** can reliably detect spectral collapse attacks. Adversaries can optimize token sequences via Hidden State Poisoning (HiSPA) to crush internal dynamics while maintaining superficially plausible output logits.
 3. **Spectral Geometry as a Monosemantic Signal:** Unlike complex feature activations, the eigenvalue spectrum is a low-dimensional, monosemantic quantity that perfectly dictates information retention. SpectralGuard acts as a gatekeeper against this specific failure mode with sub-15ms latency per token footprint.
 
 <div align="center">
@@ -75,7 +79,7 @@ cd spectralguard
 pip install -r requirements.txt
 
 # 2. Run the canonical defense evaluation
-python mamba_spectral/scripts/run_main_defense_evaluation.py \
+python scripts/run_main_defense_evaluation.py \
     --n 500 --output-dir artifacts/main_defense
 
 # 3. Verify everything passes
@@ -87,16 +91,9 @@ pytest -q
 ## Public Links
 
 - GitHub: https://github.com/DaviBonetto/spectralguard
-- Paper PDF: https://github.com/DaviBonetto/spectralguard/blob/main/paper/main.pdf
-- Hugging Face Space (target): https://huggingface.co/spaces/DaviBonetto/spectralguard-demo
-- Hugging Face Dataset (target): https://huggingface.co/datasets/DaviBonetto/spectralguard-benchmark
-
-Publication status and evidence map:
-
-- [`docs/release/public_artifacts.md`](docs/release/public_artifacts.md)
-- [`docs/release/hf_publish_checklist.md`](docs/release/hf_publish_checklist.md)
-
----
+- Paper PDF: https://github.com/DaviBonetto/spectralguard/blob/main/paper/paper.pdf
+- Hugging Face Space: https://huggingface.co/spaces/DaviBonetto/spectralguard-demo
+- Hugging Face Dataset: https://huggingface.co/datasets/DaviBonetto/spectralguard-dataset
 
 ## Public API
 
@@ -133,11 +130,6 @@ spectralguard/             ← Public package (stable API)
 │   __init__.py
 │   detector.py
 │
-mamba_spectral/            ← Research package
-│   __init__.py
-│   generate_phase_plot.py
-│   probe_source.py
-│
 ├── core/                  ← Mamba wrapper + state extraction
 ├── spectral/              ← Eigenvalue analyzer, gramian, horizon predictor
 ├── security/              ← SpectralGuard detector + adversarial generator
@@ -147,26 +139,22 @@ mamba_spectral/            ← Research package
 │   └── archive/           ← Superseded scripts (retained for history)
 ├── tests/                 ← Unit + integration tests
 └── notebooks/             ← Canonical analysis notebooks (01–06)
-    └── archive/           ← T4 execution notebooks, result dumps
 │
 paper/                     ← LaTeX source + compiled PDF
-│   main.tex
-│   main.pdf
+│   paper.tex
+│   paper.pdf
 └── figures/               ← All paper figures (canonical filenames)
-    └── overleaf/
 │
 artifacts/                 ← Experiment outputs [gitignored]
 data/                      ← Benchmark dataset
-docs/                      ← Plans, claims-evidence ledger
-│   claims-evidence-matrix.md
-│   plans/
-│   prompts/
+docs/                      ← Space and Dataset READMEs, documentation
+│   DATASET_README.md
+│   SPACE_README.md
 │
-archive/                   ← Legacy files (history preserved)
 app.py                     ← HuggingFace Spaces demo
 setup.py
 requirements.txt
-requirements-space.txt
+Dockerfile                 ← Docker configuration for Spaces
 ```
 
 ---
@@ -193,31 +181,31 @@ Every claim in the paper maps to a canonical script and an artifact folder. Run 
 
 ```bash
 # E2 — Main defense
-python mamba_spectral/scripts/run_main_defense_evaluation.py \
+python scripts/run_main_defense_evaluation.py \
     --n 500 --output-dir artifacts/main_defense \
     --figure-path paper/figures/NIXEtm04.png
 
 # E3 — Adaptive attack
-python mamba_spectral/scripts/run_adaptive_v4.py \
+python scripts/run_adaptive_v4.py \
     --n 200 --seeds 42,123,456 --output-dir artifacts/adaptive_v4
 
 # E4 — Stealth attack
-python mamba_spectral/scripts/run_adaptive_v4_stealth.py \
+python scripts/run_adaptive_v4_stealth.py \
     --n 200 --seeds 42,123,456 --surface-config s1 --run-tag S1 \
     --output-dir artifacts/adaptive_v4_stealth
 
 # E5 — GPT-2 baseline
-python mamba_spectral/scripts/run_gpt2_baseline_rigorous.py \
+python scripts/run_gpt2_baseline_rigorous.py \
     --n 200 --seeds 42,123,456
 
 # E6 — Multilayer regression
-python mamba_spectral/scripts/build_multilayer_regression_features_v2.py
-python mamba_spectral/scripts/run_multilayer_regression_rigorous.py \
+python scripts/build_multilayer_regression_features_v2.py
+python scripts/run_multilayer_regression_rigorous.py \
     --input artifacts/multilayer_regression/features_v2.csv \
     --target-col target_signal
 
 # E8 — Zamba2 transfer (run on T4/A100 recommended)
-python mamba_spectral/scripts/run_stealthy_transfer_zamba2.py \
+python scripts/run_stealthy_transfer_zamba2.py \
     --model-id Zyphra/Zamba2-2.7B \
     --prompt-csv artifacts/adaptive_v4_stealth/B2_fix/paired_prompts_for_gpt2.csv \
     --prompt-col prompt_text --label-col label \
@@ -225,12 +213,9 @@ python mamba_spectral/scripts/run_stealthy_transfer_zamba2.py \
     --output-dir artifacts/zamba2_v4_transfer
 
 # D1 — Dataset
-python mamba_spectral/scripts/compile_dataset.py \
+python scripts/compile_dataset.py \
     --output data/spectralguard_benchmark.csv --min-prompts 1200
 
-# Figure 3 (phase plot)
-python mamba_spectral/generate_phase_plot.py \
-    --output paper/figures/Jj3rAqE4.png
 ```
 
 ---
@@ -239,14 +224,15 @@ python mamba_spectral/generate_phase_plot.py \
 
 Open these for interactive exploration of each paper section:
 
-| Notebook                                                                                                | Topic                       |
-| ------------------------------------------------------------------------------------------------------- | --------------------------- |
-| [`01_Spectral_Horizon_Validation.ipynb`](mamba_spectral/notebooks/01_Spectral_Horizon_Validation.ipynb) | §3 — Horizon prediction     |
-| [`02_Adversarial_CoT_Collapse.ipynb`](mamba_spectral/notebooks/02_Adversarial_CoT_Collapse.ipynb)       | §3 — CoT collapse detection |
-| [`03_Spectral_Guard_Defense.ipynb`](mamba_spectral/notebooks/03_Spectral_Guard_Defense.ipynb)           | §4.1 — Defense evaluation   |
-| [`04_Adaptive_Attack_Evaluation.ipynb`](mamba_spectral/notebooks/04_Adaptive_Attack_Evaluation.ipynb)   | §4.2 — Adaptive attack      |
-| [`05_Scaling_And_Robustness.ipynb`](mamba_spectral/notebooks/05_Scaling_And_Robustness.ipynb)           | §4.5 — Scaling laws         |
-| [`demo.ipynb`](mamba_spectral/notebooks/demo.ipynb)                                                     | Interactive demo            |
+| Notebook                                                                                 | Topic                       |
+| ---------------------------------------------------------------------------------------- | --------------------------- |
+| [`01_Spectral_Horizon_Validation.ipynb`](notebooks/01_Spectral_Horizon_Validation.ipynb) | §3 — Horizon prediction     |
+| [`02_Adversarial_CoT_Collapse.ipynb`](notebooks/02_Adversarial_CoT_Collapse.ipynb)       | §3 — CoT collapse detection |
+| [`03_Spectral_Guard_Defense.ipynb`](notebooks/03_Spectral_Guard_Defense.ipynb)           | §4.1 — Defense evaluation   |
+| [`04_Adaptive_Attack_Evaluation.ipynb`](notebooks/04_Adaptive_Attack_Evaluation.ipynb)   | §4.2 — Adaptive attack      |
+| [`05_Scaling_And_Robustness.ipynb`](notebooks/05_Scaling_And_Robustness.ipynb)           | §4.5 — Scaling laws         |
+| [`pareto_sweep_results.ipynb`](notebooks/pareto_sweep_results.ipynb)                     | §6.3 — Pareto frontier      |
+| [`demo.ipynb`](notebooks/demo.ipynb)                                                     | Interactive demo            |
 
 ---
 
@@ -275,7 +261,7 @@ python app.py
 HuggingFace Spaces deployment:
 
 ```bash
-pip install -r requirements-space.txt
+pip install -r requirements.txt
 python app.py
 ```
 
@@ -305,12 +291,19 @@ If you use SpectralGuard in your research, please cite:
 
 ```bibtex
 @inproceedings{bonetto2025spectralguard,
-  title     = {SpectralGuard: Eigenvalue-Based Anomaly Detection for Mamba Language Models},
+  title     = {SpectralGuard: Detecting Memory Collapse Attacks in State Space Models},
   author    = {Bonetto, Davi},
   booktitle = {Advances in Neural Information Processing Systems},
-  year      = {2025},
+  year      = {2026},
 }
 ```
+
+---
+
+## Contact
+
+- **Email:** davi.bonetto100@gmail.com
+- **GitHub:** [@DaviBonetto](https://github.com/DaviBonetto)
 
 ---
 

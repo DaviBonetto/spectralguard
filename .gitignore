@@ -31,6 +31,7 @@ Thumbs.db
 # Experiment artifacts (generated, large files)
 # ──────────────────────────────────────────────
 artifacts/
+data/
 *.pkl
 *.pt
 *.ckpt
@@ -43,8 +44,6 @@ artifacts/
 # ──────────────────────────────────────────────
 # Project Cleanup (JANITOR decisions)
 # ──────────────────────────────────────────────
-paper/
-multi_agent_prompts/
 inspirações_apagar_depois/
 hf_publish_tmp/
 hf_publish_ready/
@@ -70,3 +69,4 @@ probe_source.txt
 *.synctex.gz
 *.fls
 *.fdb_latexmk
+
