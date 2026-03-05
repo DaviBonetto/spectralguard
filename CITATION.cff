@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "If you use SpectralGuard in your research, please cite it using these metadata."
+title: "SpectralGuard: Detecting Memory Collapse Attacks in State Space Models"
+authors:
+  - given-names: Davi
+    family-names: Bonetto
+    email: davi.bonetto100@gmail.com
+    affiliation: Independent Researcher
+version: 1.0.0
+date-released: 2026-03-05
+url: "https://github.com/DaviBonetto/spectralguard"
+repository-code: "https://github.com/DaviBonetto/spectralguard"
+license: MIT
+keywords:
+  - state-space-models
+  - mamba
+  - ai-safety
+  - adversarial-machine-learning
+  - mechanistic-interpretability
+  - spectral-analysis
+  - llm-security
+preferred-citation:
+  type: conference-paper
+  title: "SpectralGuard: Detecting Memory Collapse Attacks in State Space Models"
+  authors:
+    - given-names: Davi
+      family-names: Bonetto
+  collection-title: "Advances in Neural Information Processing Systems"
+  year: 2026
