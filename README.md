@@ -23,19 +23,29 @@ State Space Models (SSMs) such as **Mamba** achieve linear-time sequence process
 
 ## The Vulnerability: Spectral Collapse
 
-In architectures like Mamba, information is compressed into a $d$-dimensional hidden state. The retention of this memory is mathematically bounded by the **spectral radius** $\rho(\bar{A}_t)$ of its recurrent transition matrix.
+In architectures like Mamba, information is compressed into a $d$-dimensional hidden state. The retention of this memory is mathematically bounded by the **spectral radius** $\rho(\bar{A}_t)$ of its recurrent transition matrix:
+$$ \rho(\bar{A}_t) = \max_{i=1,\dots,d} |\lambda_i(\exp(\Delta_t A))| $$
 
 When $\rho(\bar{A}_t) \approx 1$, the model remembers and reasons over long sequences. When $\rho(\bar{A}_t) \to 0$, information contracts exponentially, wiping the model's memory in just a few tokens.
 
+### Theorem 1: The Spectral Horizon Bound
+
+We formalize memory capacity through the effective memory horizon ($H_{\text{eff}}$), proving it is tightly bounded by the spectral radius and the Controllability Gramian $\mathcal{W}_c$:
+
+$$ H*{\text{eff}} \le \frac{\log\left( \kappa(\bar{A}) \sqrt{\|h_0\|\_2^2 / \varepsilon^2 \lambda*{\max}(\mathcal{W}\_c)} \right)}{\log(1/\rho(\bar{A}))} $$
+
+As $\rho$ drops below a critical threshold ($\approx 0.90$), the denominator spikes, and reasoning capacity collapses from millions of tokens to mere dozens.
+
 <div align="center">
+<br>
 <img src="assets/spectral_phase_transition.png" alt="Spectral Phase Transition" width="48%"/>
 <img src="assets/accuracy_vs_distance.png" alt="Accuracy vs Distance" width="48%"/>
 <br><em>The Spectral Phase Transition in Mamba-130M. When spectral stability is compromised ($\rho < 0.90$), reasoning capacity effectively collapses across different context distances.</em>
 </div>
 
-### The Impossibility of Output-Level Defense
+### Theorem 2: Evasion Existence for Output-Level Defense
 
-We mathematically prove an **Evasion Existence Theorem**: no defense operating solely on model outputs (e.g., perplexity filters, toxicity classifiers) can reliably detect spectral collapse attacks. The internal recurrence bottleneck allows adversaries to decouple internal devastation from output perplexity.
+We mathematically prove that **no defense operating solely on model outputs** (e.g., perplexity filters, toxicity classifiers) can reliably detect spectral collapse attacks. The internal recurrence bottleneck allows adversaries to decouple internal devastation from output perplexity. For any output-only detector $D$, there exists an adversarial input $x^\star$ that passes the defense ($D(x^\star) = 0$) while simultaneously forcing $\rho < \rho_{\text{critical}}$.
 
 ## The Threat: Hidden State Poisoning (HiSPA)
 
@@ -59,6 +69,19 @@ SpectralGuard intercepts inference and extracts feature signals ($[\rho_1\dots\r
 <img src="assets/hidden_state_trajectories_3d.png" alt="SpectralGuard Phase-space trajectory" width="70%"/>
 <br><em>Phase-space trajectory of Mamba-130M hidden states. Benign dynamics maintain a stable orbit (blue), while a Hidden State Poisoning Attack (HiSPA) forces contraction (red). SpectralGuard intervenes before complete memory collapse (green), preserving reasoning capacity.</em>
 </div>
+
+### Theorem 3: Conditional Soundness and Completeness
+
+Under the empirical assumption that memory-collapsing attacks must force $\rho(\bar{A}_t) \le \rho_{\min}$ to succeed, SpectralGuard provides a formal guarantee:
+
+- **Conditionally Complete:** All memory-collapsing attacks are detected within the sliding window $w$.
+- **Sound:** Benign sequences strictly maintaining $\rho > \rho_{\min}$ incur zero false positives (FPR $\to 0$).
+
+### Theorem 4: Lipschitz Certified Robustness
+
+We provide a certified perturbation radius against adaptive attacks. An adversary attempting to evade the $\rho_{\min}$ threshold must perturb the internal discretization step $\Delta_t$ by at least:
+$$ |\Delta\Delta| \ge \frac{|\Delta\rho|}{L*A} \quad \text{where} \quad L_A = \|A\|\_2 \cdot \exp(\Delta*{\max}\|A\|\_2) $$
+For a default Mamba-130M layer, this enforces an incredibly tight precision requirement ($O(10^{-7})$) on the gradient optimizer, providing a provable, algorithmic barrier against fine-grained threshold evasion.
 
 ### Why it Works (Mechanistic Interpretability)
 
