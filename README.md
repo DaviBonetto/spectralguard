@@ -49,12 +49,12 @@ In the near-critical regime where $\rho(\bar{A}) = 1 - \eta$ with $\eta \ll 1$, 
 
 ### Theorem 2: Evasion Existence for Output-Only Detectors
 
-We mathematically prove that **no defense operating solely on model outputs** (logits, generated text, perplexity filters, or toxicity classifiers) can reliably detect spectral collapse attacks. For any output-only detector $D: \mathcal{Y}^* \to \{0,1\}$ and any error tolerance $\delta > 0$, there exists an adversarial input $x^\star$ such that:
+We mathematically prove that **no defense operating solely on model outputs** (logits, generated text, perplexity filters, or toxicity classifiers) can reliably detect spectral collapse attacks. For any output-only detector D: 𝒴* → {0,1} and any error tolerance δ > 0, there exists an adversarial input x⋆ such that:
 
-1. $\mathbb{P}[D(y_{1:T}(x^\star)) = 0] \ge 1 - \delta$ — the input passes the defense
-2. $\rho(\bar{A}_t | x^\star) < \rho_{\text{critical}}$ for some $t$ — spectral collapse is induced
+1. ℙ[D(y₁:ₜ(x⋆)) = 0] ≥ 1 − δ — the input passes the defense
+2. ρ(Ā_t ∣ x⋆) < ρ_critical for some t — spectral collapse is induced
 
-The core vulnerability is that the output mapping $h_t \mapsto y_t = Ch_t$ is a high-dimensional projection from $\mathbb{R}^{16} \to \mathbb{R}^{50{,}257}$. A compressed state (low $\rho$) maps distinct internal histories to nearby points in state space, which are then projected to similar output logits—making internal damage invisible from outside. **This motivates monitoring internal dynamics directly.**
+The core vulnerability is that the output mapping $h_t \mapsto y_t = Ch_t$ is a high-dimensional projection from $\mathbb{R}^{16}$ to $\mathbb{R}^{50257}$. A compressed state (low ρ) maps distinct internal histories to nearby points in state space, which are then projected to similar output logits—making internal damage invisible from outside. **This motivates monitoring internal dynamics directly.**
 
 ## The Threat: Hidden State Poisoning (HiSPA)
 
@@ -85,20 +85,20 @@ SpectralGuard intercepts inference at every token and extracts multi-layer spect
 
 ### Theorem 3: Conditional Soundness and Completeness
 
-Under the empirically supported assumption that effective memory-collapsing attacks (inducing >20% accuracy degradation) must reduce the spectral radius below a critical threshold, SpectralGuard with threshold $\rho_{\min}$ and window $w$ provides formal guarantees:
+Under the empirically supported assumption that effective memory-collapsing attacks (inducing >20% accuracy degradation) must reduce the spectral radius below a critical threshold, SpectralGuard with threshold ρ_min and window w provides formal guarantees:
 
-- **Conditionally Complete:** All attacks satisfying the spectral collapse assumption are detected within latency $w$ tokens.
-- **Sound:** Benign inputs maintaining $\rho(\bar{A}_t) > \rho_{\min}$ for all $t$ incur zero false positives (FPR → 0).
+- **Conditionally Complete:** All attacks satisfying the spectral collapse assumption are detected within latency w tokens.
+- **Sound:** Benign inputs maintaining ρ(Ā_t) > ρ_min for all t incur zero false positives (FPR → 0).
 
-Supporting evidence includes: (i) statistically significant correlation between $\rho$ and task accuracy ($r = 0.49$, $p < 10^{-26}$); (ii) causal intervention experiments confirming that directly clamping $\rho$ degrades performance with model weights frozen; and (iii) consistent spectral collapse signatures across four task categories.
+Supporting evidence includes: (i) statistically significant correlation between ρ and task accuracy (r = 0.49, p < 10⁻²⁶); (ii) causal intervention experiments confirming that directly clamping ρ degrades performance with model weights frozen; and (iii) consistent spectral collapse signatures across four task categories.
 
 ### Theorem 4: Lipschitz Certified Robustness
 
 We provide a certified perturbation radius against adaptive attacks. For any $\Delta_1, \Delta_2$ in the discretization range:
 
-$$|\rho(\exp(\Delta_1 A)) - \rho(\exp(\Delta_2 A))| \le L_A \cdot |\Delta_1 - \Delta_2|$$
+$$\vert\rho(\exp(\Delta_1 A)) - \rho(\exp(\Delta_2 A))\vert \le L_A \cdot \vert\Delta_1 - \Delta_2\vert$$
 
-where $L_A = \|A\|_2 \cdot \exp(\Delta_{\max}\|A\|_2)$. For Mamba-130M with $\|A\|_2 \approx 1$ and $\Delta_{\max} \approx 10$, we have $L_A \approx 2.2 \times 10^4$, meaning a spectral shift of $\Delta\rho = 0.01$ requires $|\Delta\Delta| \ge 4.5 \times 10^{-7}$—an incredibly tight precision requirement on the gradient optimizer. As model depth increases and $L_A$ compounds through layers, even small discretization noise provides a natural barrier against fine-grained spectral manipulation.
+where L_A = ‖A‖₂ · exp(Δ_max · ‖A‖₂). For Mamba-130M with ‖A‖₂ ≈ 1 and Δ_max ≈ 10, we have L_A ≈ 2.2 × 10⁴, meaning a spectral shift of Δρ = 0.01 requires |ΔΔ| ≥ 4.5 × 10⁻⁷—an incredibly tight precision requirement on the gradient optimizer. As model depth increases and L_A compounds through layers, even small discretization noise provides a natural barrier against fine-grained spectral manipulation.
 
 ### Why It Works: Mechanistic Interpretability
 
